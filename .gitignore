@@ -1,0 +1,13 @@
+# 写作资料、下载的论文与构建缓存都不进仓库
+papers/
+_private/
+.context/
+.claude/
+book/build/.cache/
+output/*.tmp.pdf
+*.part
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

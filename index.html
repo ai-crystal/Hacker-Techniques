@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>暗门 · 黑客技术与安全原理</title>
+  <meta name="description" content="一本讲黑客技术与安全原理的科普书，从晶体管一直讲到僵尸网络。作者 Dr. Dezeming。">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <style>
+    :root {
+      --theme-color: #0f5c5c;
+      --base-font-family: "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+      --base-font-size: 16px;
+    }
+    .sidebar { font-family: "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif; }
+    .sidebar ul li a { font-size: 14px; }
+    .markdown-section { max-width: 780px; line-height: 1.85; }
+    .markdown-section h1 { font-size: 1.9rem; letter-spacing: .02em; }
+    .markdown-section h2 { font-size: 1.35rem; margin-top: 2.2em; }
+    .markdown-section p { text-align: justify; }
+    .markdown-section figure { margin: 1.8em 0; text-align: center; }
+    .markdown-section figure img { max-width: 100%; border-radius: 2px; }
+    .markdown-section figcaption {
+      font-size: .82rem; color: #6b6b70; margin-top: .7em; line-height: 1.6;
+      font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    }
+    .markdown-section table { display: table; width: 100%; font-size: .9rem; }
+    .markdown-section pre { font-size: .85rem; line-height: 1.55; }
+    .markdown-section code { font-family: "JetBrains Mono", Consolas, monospace; }
+    .app-nav { font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+    .cover-main h1 { letter-spacing: .18em; }
+    .cover-main p { font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+    section.cover {
+      background: #04101c url("book/images/cover-bg.jpg") center / cover no-repeat !important;
+      color: #fff;
+    }
+    section.cover { position: relative; }
+    section.cover::before {
+      content: ""; position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse at 50% 42%,
+        rgba(3, 12, 22, .30) 0%, rgba(3, 12, 22, .72) 55%, rgba(3, 12, 22, .90) 100%);
+    }
+    section.cover .cover-main { position: relative; z-index: 1; }
+    section.cover .cover-main { position: relative; z-index: 1; }
+    .cover-hero { text-align: center; color: #f4f8f8; }
+    .cover-hero .cover-title {
+      font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      font-size: 4.2rem; font-weight: 700; letter-spacing: .34em;
+      text-indent: .34em; line-height: 1.15;
+      text-shadow: 0 3px 26px rgba(0, 0, 0, .65);
+    }
+    .cover-hero .cover-sub {
+      margin-top: 1.6rem; font-size: 1.12rem; letter-spacing: .3em;
+      text-indent: .3em; color: #dfeaea;
+    }
+    .cover-hero .cover-tag {
+      margin: 1.5rem auto 2.4rem; max-width: 34rem; font-size: .92rem;
+      line-height: 1.9; color: #c3d4d4;
+    }
+    .cover-hero .cover-actions { display: flex; gap: 1rem; justify-content: center; }
+    .cover-hero .cover-actions a {
+      display: inline-block; padding: .72em 1.9em; font-size: .95rem;
+      letter-spacing: .12em; text-decoration: none; border-radius: 2px;
+    }
+    .cover-hero .btn-main { background: #0f5c5c; color: #fff; border: 1px solid #0f5c5c; }
+    .cover-hero .btn-main:hover { background: #14706f; }
+    .cover-hero .btn-ghost {
+      color: #e6efef; border: 1px solid rgba(230, 239, 239, .55);
+      background: rgba(255, 255, 255, .05);
+    }
+    .cover-hero .btn-ghost:hover { background: rgba(255, 255, 255, .14); }
+    .cover-hero .cover-foot {
+      margin-top: 3.2rem; font-size: .8rem; letter-spacing: .14em; color: #9fb4b4;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: '暗门',
+      repo: '',
+      loadSidebar: true,
+      coverpage: true,
+      onlyCover: false,
+      subMaxLevel: 2,
+      maxLevel: 2,
+      auto2top: true,
+      homepage: 'README.md',
+      notFoundPage: false,
+      search: {
+        placeholder: '搜索全书',
+        noData: '找不到相关内容',
+        paths: 'auto',
+        depth: 3
+      },
+      pagination: {
+        previousText: '上一章',
+        nextText: '下一章',
+        crossChapter: true
+      },
+      copyCode: {
+        buttonText: '复制',
+        errorText: '复制失败',
+        successText: '已复制'
+      },
+      mermaid: {
+        theme: 'default'
+      },
+      // 章节里的图片写作 ../images/xx/a.png（GitHub 上可直接显示），
+      // 在站点里补成 book/images/xx/a.png
+      plugins: [
+        function (hook) {
+          hook.doneEach(function () {
+            document.querySelectorAll('.markdown-section img').forEach(function (img) {
+              var src = img.getAttribute('src') || '';
+              if (src.indexOf('../images/') === 0) {
+                img.src = 'book/' + src.slice(3);
+              }
+            });
+          });
+        }
+      ]
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2/dist/docsify-copy-code.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-katex@1/dist/docsify-katex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-mermaid@2/dist/docsify-mermaid.js"></script>
+</body>
+</html>
