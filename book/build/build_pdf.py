@@ -257,16 +257,19 @@ body { width: %(w)s; height: %(h)s; overflow: hidden; }
 .cover .author { font-size: 11pt; letter-spacing: 0.18em; }
 .cover .year { font-size: 8pt; letter-spacing: 0.2em; color: #93a9ab; }
 
-.back .shade { background: linear-gradient(180deg,
-    rgba(3,12,18,0.90) 0%%, rgba(3,12,18,0.86) 70%%,
-    rgba(3,12,18,0.94) 100%%); }
+.back .shade { background:
+    linear-gradient(180deg, rgba(3,12,18,0.88) 0%%, rgba(3,12,18,0.44) 46%%,
+      rgba(3,12,18,0.34) 66%%, rgba(3,12,18,0.92) 100%%),
+    linear-gradient(90deg, rgba(3,12,18,0.55) 0%%, rgba(3,12,18,0) 62%%); }
 .back .inner { position: absolute; inset: 0; padding: 26mm 18mm 18mm 18mm;
     color: #e8eeee; display: flex; flex-direction: column; }
-.back .kicker { font-size: 7.4pt; letter-spacing: 0.34em; color: #7fb0b2;
+.back .kicker { font-size: 7.4pt; letter-spacing: 0.34em; color: #9ecfd0;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
     margin-bottom: 9mm; }
 .back .blurb p { font-family: "AnmenSerif", "Noto Serif SC", "SimSun", serif;
-    font-size: 9.6pt; line-height: 2.05; text-indent: 0; color: #dfe8e8;
-    text-align: justify; margin-bottom: 4.6mm; }
+    font-size: 9.6pt; line-height: 2.05; text-indent: 0; color: #eef4f4;
+    text-align: justify; margin-bottom: 4.6mm;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.55); }
 .back .blurb p.first::first-letter { color: #ffffff; }
 .back .spacer { flex: 1; }
 .back .meta { font-size: 8.4pt; line-height: 2.1; color: #a8bcbe;

@@ -292,8 +292,8 @@ table {
   font-size: 9pt;
   line-height: 1.5;
   margin: 4.5mm 0 5mm 0;
-  break-inside: avoid;
-  page-break-inside: avoid;
+  break-inside: auto;
+  page-break-inside: auto;
   font-family: "AnmenSans", "Microsoft YaHei", sans-serif;
 }
 
@@ -314,6 +314,14 @@ td {
 }
 
 tr:last-child td { border-bottom: 0.9pt solid var(--ink); }
+
+tr {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* 表头在跨页时重复 */
+thead { display: table-header-group; }
 
 /* ---------------- 分隔与脚注 ---------------- */
 
