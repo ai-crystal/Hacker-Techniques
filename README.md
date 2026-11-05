@@ -4,10 +4,10 @@
 
 作者：Dr. Dezeming
 
-<p>
-<a class="download-btn" href="output/dark-gate.pdf">下载 PDF</a>
-<a class="download-btn" href="book/chapters/ch01.md">从第一章开始</a>
-</p>
+在线阅读：<https://YOUR-USERNAME.github.io/dark-gate/>
+
+- [从第一章开始读](book/chapters/ch01.md)
+- [下载整本 PDF](output/dark-gate.pdf)（带书签目录，5 MB 左右）
 
 ---
 
@@ -62,9 +62,10 @@
 
 ## 阅读方式
 
-- 在线阅读：本页就是入口，左侧栏按篇分组，可以直接跳到任意一章。
-- 整本下载：[暗门 · PDF](output/dark-gate.pdf)，带书签目录，适合离线或打印。
-- 书稿源文件在 `book/chapters/`，插图的绘图代码在 `book/code/`，图片在 `book/images/`。
+- 在线阅读：打开 <https://YOUR-USERNAME.github.io/dark-gate/>，左侧栏按篇分组，可以直接跳到任意一章。
+- 在仓库里读：点上面的章节目录，GitHub 会直接渲染 Markdown，插图一并显示。
+- 整本下载：[暗门 · PDF](output/dark-gate.pdf)，带两级书签，适合离线或打印。
+- 书稿在 `book/chapters/`，插图的绘图代码在 `book/code/`，图片在 `book/images/`。
 
 ## 关于内容
 
