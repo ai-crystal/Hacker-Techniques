@@ -3,7 +3,8 @@ papers/
 _private/
 .context/
 .claude/
-book/build/.cache/
+books/build/.cache/
+output/*.tmp
 output/*.tmp.pdf
 *.part
 node_modules/

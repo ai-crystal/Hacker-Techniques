@@ -5,11 +5,6 @@ set "PYTHONUTF8=1"
 set "PYTHONIOENCODING=utf-8"
 cd /d "%~dp0"
 
-echo ============================================
-echo   暗门 · 生成本地 PDF
-echo ============================================
-echo.
-
 set "PY=python"
 where python >nul 2>nul
 if errorlevel 1 (
@@ -18,9 +13,7 @@ if errorlevel 1 (
     ) else (
         where py >nul 2>nul
         if errorlevel 1 (
-            echo [错误] 没有找到 Python。请先安装 Python 3.10 以上版本，
-            echo        安装时勾选 "Add Python to PATH"。
-            echo.
+            echo [错误] 没有找到 Python，请安装 Python 3.10 以上版本并在安装时勾选 Add to PATH。
             pause
             exit /b 1
         )
@@ -40,16 +33,16 @@ if errorlevel 1 (
     )
 )
 
-echo [1/2] 重新绘制插图……
-for /d %%d in (book\code\ch*) do (
-    if exist "%%d\figures.py" (
-        %PY% "%%d\figures.py" >nul 2>nul
-        if errorlevel 1 echo   [警告] %%d 绘图失败，已跳过
-    )
-)
+set "TARGET=%~1"
+if "%TARGET%"=="" set "TARGET=all"
+if /i "%TARGET%"=="figures" goto :figures
 
-echo [2/2] 排版并生成 PDF……
-%PY% book\build\build_pdf.py
+echo ============================================
+echo   黑客技术与安全原理 · 构建 %TARGET%
+echo ============================================
+echo.
+
+%PY% books\build\build.py --book %TARGET%
 if errorlevel 1 (
     echo.
     echo [失败] 构建没有完成，请查看上方报错。
@@ -57,7 +50,23 @@ if errorlevel 1 (
     exit /b 1
 )
 
+%PY% books\build\gen_sidebars.py
 echo.
-echo 完成：output\dark-gate.pdf
+echo 完成。PDF 在 output\ 目录，站点入口 index.html。
 echo.
 pause
+exit /b 0
+
+:figures
+echo [1/1] 重画全系列插图……
+for /d %%b in (books\beginner books\theory books\practice) do (
+    for /d %%c in (%%b\code\ch*) do (
+        if exist "%%c\figures.py" (
+            %PY% "%%c\figures.py" >nul 2>nul
+            if errorlevel 1 echo   [警告] %%c 绘图失败
+        )
+    )
+)
+echo 完成。
+pause
+exit /b 0

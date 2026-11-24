@@ -1,0 +1,118 @@
+[
+ {
+  "path": "front/titlepage.md",
+  "kind": "titlepage"
+ },
+ {
+  "path": "front/copyright.md",
+  "kind": "copyright"
+ },
+ {
+  "path": "front/preface.md",
+  "kind": "front"
+ },
+ {
+  "path": "@toc",
+  "kind": "toc"
+ },
+ {
+  "path": "front/part1.md",
+  "kind": "part"
+ },
+ {
+  "path": "chapters/ch01.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch02.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch03.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch04.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "front/part2.md",
+  "kind": "part"
+ },
+ {
+  "path": "chapters/ch05.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch06.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch07.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch08.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch09.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch10.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "front/part3.md",
+  "kind": "part"
+ },
+ {
+  "path": "chapters/ch11.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch12.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch13.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch14.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch15.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "front/part4.md",
+  "kind": "part"
+ },
+ {
+  "path": "chapters/ch16.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch17.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch18.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "front/postscript.md",
+  "kind": "front"
+ },
+ {
+  "path": "appendix/a1-toolbox.md",
+  "kind": "appendix"
+ },
+ {
+  "path": "appendix/a2-labs.md",
+  "kind": "appendix"
+ }
+]

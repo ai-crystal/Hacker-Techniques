@@ -1,0 +1,24 @@
+{
+ "series": "黑客技术与安全原理",
+ "author": "Dr. Dezeming",
+ "year": "2026",
+ "toc_sections": false,
+ "title": "黑客技术与安全原理",
+ "volume": "实战篇",
+ "subtitle": "从靶场到真实对抗",
+ "volume_no": 3,
+ "pdf": "practice.pdf",
+ "accent": "#8c3f2a",
+ "accent_light": "#d9a58f",
+ "accent_ink": "#3d1d13",
+ "cover_image": "E:/Study/0-logo/logo11.png",
+ "back_image": "E:/Study/0-logo/logo13.png",
+ "tagline": "在自己的靶场里把每条路走一遍",
+ "keywords": "渗透测试, 靶场, 提权, 横向移动, 应急响应, 检测工程",
+ "meta1": "这一册写给想真正上手的人，所有练习都在自己搭的环境里完成。",
+ "meta2": "动手之前先读授权与法律那一节。",
+ "blurb": [
+  "从一台干净的虚拟机开始，搭隔离网络、装靶场、配工具链，然后在里面完成侦察、验证、利用、提权、横向和清理。每一章都有可复现的步骤和判断依据，不是命令清单。",
+  "后半册转向防守，讲样本分析、检测规则、日志狩猎和应急响应。攻击与防守用同一套实验环境，做完红队再做蓝队，才知道哪些告警真的有用。"
+ ]
+}
