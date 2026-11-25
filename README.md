@@ -2,6 +2,8 @@
 
 一套讲攻防原理的中文技术书，共三册。每一册都能单独读，合起来是一条从概念到动手的路径。
 
+在线阅读：<https://ai-crystal.github.io/Hacker-Techniques/>　·　仓库：<https://github.com/ai-crystal/Hacker-Techniques>
+
 | 册 | 内容 | 页数 | 阅读 | 下载 |
 | --- | --- | --- | --- | --- |
 | 入门篇 | 从病毒史到攻防全景 | 199 | [在线阅读](books/beginner/README.md) | <a class="pdf-link" href="output/beginner.pdf" target="_blank" rel="noopener">PDF</a> |

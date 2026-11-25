@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 BOOKS = ROOT / "books"
 OUTPUT = ROOT / "output"
 
+SITE = "https://ai-crystal.github.io/Hacker-Techniques/"
 ORDER = ["beginner", "theory", "practice"]
 LABEL = {"beginner": "入门篇", "theory": "理论篇", "practice": "实战篇"}
 NL = "\n"
@@ -94,6 +95,8 @@ def series_readme() -> str:
         "# 黑客技术与安全原理",
         "",
         "一套讲攻防原理的中文技术书，共三册。每一册都能单独读，合起来是一条从概念到动手的路径。",
+        "",
+        f"在线阅读：<{SITE}>　·　仓库：<https://github.com/ai-crystal/Hacker-Techniques>",
         "",
         *rows,
         "",
