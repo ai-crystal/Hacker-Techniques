@@ -1,11 +1,13 @@
-- [首页](README.md)
+- [系列首页](/README.md)
 
-- **入门篇　从病毒史到攻防全景　199 页**
-- [本册首页](books/beginner/README.md)
+- **01　入门篇**
+  - [本册首页](/books/beginner/README.md)
+  - <a href="/output/beginner.pdf" target="_blank" rel="noopener" data-router-ignore>下载 PDF</a>
 
-- **理论篇　漏洞、内存与协议的深层结构　147 页**
-- [本册首页](books/theory/README.md)
+- **02　理论篇**
+  - [本册首页](/books/theory/README.md)
+  - <a href="/output/theory.pdf" target="_blank" rel="noopener" data-router-ignore>下载 PDF</a>
 
-- **实战篇　从靶场到真实对抗　192 页**
-- [本册首页](books/practice/README.md)
-
+- **03　实战篇**
+  - [本册首页](/books/practice/README.md)
+  - <a href="/output/practice.pdf" target="_blank" rel="noopener" data-router-ignore>下载 PDF</a>
