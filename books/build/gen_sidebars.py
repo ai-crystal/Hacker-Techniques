@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
-"""从配置生成侧栏与各册首页，保持站点与 structure.json 一致。
+"""按 book.json / structure.json 生成系列侧栏，并刷新首页里的章数与页数。
 
     python books/build/gen_sidebars.py
+
+侧栏是完全生成的，手改会被覆盖；首页 README 的正文是手写的，这里只替换
+「共 N 章 · P 页」和表格里的页数、PDF 文件名，不动其余文字。
 """
 
 from __future__ import annotations
@@ -13,11 +16,21 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 BOOKS = ROOT / "books"
 OUTPUT = ROOT / "output"
-
-SITE = "https://ai-crystal.github.io/Hacker-Techniques/"
-ORDER = ["beginner", "theory", "practice"]
-LABEL = {"beginner": "入门篇", "theory": "理论篇", "practice": "实战篇"}
 NL = "\n"
+
+CN_NUM = "零一二三四五六七八九十"
+
+
+def volume_order() -> list[dict]:
+    items = []
+    for d in BOOKS.iterdir():
+        cfg_path = d / "book.json"
+        if cfg_path.exists():
+            cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+            cfg["_dir"] = d.name
+            items.append(cfg)
+    items.sort(key=lambda c: c.get("volume_no", 99))
+    return items
 
 
 def h1_of(path: Path) -> str:
@@ -26,8 +39,62 @@ def h1_of(path: Path) -> str:
     return m.group(1).strip() if m else path.stem
 
 
-def book_pages(name: str):
-    cfg = json.loads((BOOKS / name / "book.json").read_text(encoding="utf-8"))
+def chapter_title(path: Path, index: int) -> str:
+    raw = h1_of(path)
+    raw = re.sub(r"^第[一二三四五六七八九十百\d]+章[\s\u3000]*", "", raw)
+    return f"第 {index} 章　{raw}"
+
+
+def structure(book_dir: Path) -> list[dict]:
+    return json.loads((book_dir / "structure.json").read_text(encoding="utf-8"))
+
+
+def pdf_path(cfg: dict) -> str:
+    return f"output/{cfg['pdf']}"
+
+
+def root_sidebar(vols: list[dict]) -> str:
+    lines = ["- [系列首页](/README.md)", ""]
+    for cfg in vols:
+        lines.append(f"- **{cfg['volume_no']:02d}　{cfg['volume']}**")
+        lines.append(f"  - [本册首页](/books/{cfg['_dir']}/README.md)")
+        lines.append(f'  - <a href="/{pdf_path(cfg)}" target="_blank" '
+                     f'rel="noopener" data-router-ignore>下载 PDF</a>')
+        lines.append("")
+    return NL.join(lines).rstrip(NL) + NL
+
+
+def book_sidebar(cfg: dict) -> str:
+    name = cfg["_dir"]
+    items = structure(BOOKS / name)
+    lines = ["- [系列首页](/README.md)", f"- [本册首页](/books/{name}/README.md)", ""]
+    prefaces = [i for i in items
+                if i["kind"] == "front" and "preface" in i["path"]]
+    if prefaces:
+        for it in prefaces:
+            lines.append(f"- [前言](/books/{name}/{it['path']})")
+        lines.append("")
+    idx = 0
+    for it in items:
+        if it["kind"] != "chapter":
+            continue
+        idx += 1
+        p = BOOKS / name / it["path"]
+        lines.append(f"- [{chapter_title(p, idx)}](/books/{name}/{it['path']})")
+    lines.append("")
+    apps = [i for i in items if i["kind"] == "appendix"]
+    if apps:
+        lines.append("- **附录**")
+        for it in apps:
+            lines.append(f"  - [{h1_of(BOOKS / name / it['path'])}]"
+                         f"(/books/{name}/{it['path']})")
+        lines.append("")
+    lines.append(f'- <a href="/{pdf_path(cfg)}" target="_blank" '
+                 f'rel="noopener" data-router-ignore>下载 PDF</a>')
+    return NL.join(lines) + NL
+
+
+def book_pages(cfg: dict) -> tuple[int, int, float] | None:
     pdf = OUTPUT / cfg["pdf"]
     if not pdf.exists():
         return None
@@ -35,115 +102,66 @@ def book_pages(name: str):
     doc = pymupdf.open(pdf)
     pages = doc.page_count
     doc.close()
-    return pages, pdf.stat().st_size / 1048576
+    ch = sum(1 for i in structure(BOOKS / cfg["_dir"]) if i["kind"] == "chapter")
+    return ch, pages, pdf.stat().st_size / 1048576
 
 
-def sidebar(book_dir: Path) -> str:
-    struct = json.loads((book_dir / "structure.json").read_text(encoding="utf-8"))
-    name = book_dir.name
-    lines = [f"- [本册首页](books/{name}/README.md)", ""]
-    for item in struct:
-        if item["kind"] == "toc":
+def patch_root_readme(vols: list[dict]) -> None:
+    path = ROOT / "README.md"
+    if not path.exists():
+        return
+    text = path.read_text(encoding="utf-8")
+    for cfg in vols:
+        info = book_pages(cfg)
+        if not info:
             continue
-        p = book_dir / item["path"]
-        title = h1_of(p) if p.exists() else Path(item["path"]).stem
-        if item["kind"] == "part":
-            lines.append(f"- **{title}**")
-        elif item["kind"] in ("chapter", "appendix", "front"):
-            lines.append(f"- [{title}](books/{name}/{item['path']})")
-    return NL.join(lines) + NL
+        _, pages, _ = info
+        name = cfg["_dir"]
+        # 表格行：| 01 | [入门篇](books/beginner/README.md) | ... | 199 | ... |
+        pattern = re.compile(
+            r"(\|\s*\d{2}\s*\|\s*\[[^\]]+\]\(books/" + re.escape(name) +
+            r"/README\.md\)[^\n]*?\|\s*)\d+(\s*\|)")
+        text = pattern.sub(lambda m: f"{m.group(1)}{pages}{m.group(2)}", text)
+        # 只在该册所在的行里改 PDF 名
+        lines = text.split(chr(10))
+        for idx, line in enumerate(lines):
+            if line.startswith("|") and f"(books/{name}/README.md)" in line:
+                lines[idx] = re.sub(r"output/v[0-9]+-[a-z]+[.]pdf",
+                                    pdf_path(cfg), line)
+        text = chr(10).join(lines)
+    write(path, text)
 
 
-def readme(book_dir: Path) -> str:
-    name = book_dir.name
-    cfg = json.loads((book_dir / "book.json").read_text(encoding="utf-8"))
-    struct = json.loads((book_dir / "structure.json").read_text(encoding="utf-8"))
-    info = book_pages(name)
-    out = [f"# {cfg['volume']}　{cfg.get('subtitle', '')}", ""]
+def patch_book_readme(cfg: dict) -> None:
+    path = BOOKS / cfg["_dir"] / "README.md"
+    if not path.exists():
+        return
+    text = path.read_text(encoding="utf-8")
+    info = book_pages(cfg)
     if info:
-        out += [f"共 {info[0]} 页，PDF {info[1]:.1f} MB。", ""]
-    for para in cfg.get("blurb", []):
-        out += [para, ""]
-    out += [f"[下载本册 PDF](output/{cfg['pdf']})", "", "## 目录", ""]
-    for item in struct:
-        if item["kind"] == "toc":
-            continue
-        p = book_dir / item["path"]
-        title = h1_of(p) if p.exists() else Path(item["path"]).stem
-        if item["kind"] == "part":
-            out += ["", f"### {title}", ""]
-        elif item["kind"] in ("chapter", "appendix"):
-            out.append(f"- [{title}](books/{name}/{item['path']})")
-        elif item["kind"] == "front" and "postscript" in item["path"]:
-            out += ["", f"- [{title}](books/{name}/{item['path']})"]
-    return NL.join(out) + NL
+        ch, pages, _ = info
+        text = re.sub(r"共\s*\d+\s*章\s*·\s*\d+\s*页", f"共 {ch} 章 · {pages} 页", text)
+    text = re.sub(r"\.\./\.\./output/v\d+-[a-z]+\.pdf",
+                  f"../../{pdf_path(cfg)}", text)
+    write(path, text)
 
 
-def series_readme() -> str:
-    rows = ["| 册 | 内容 | 页数 | 阅读 | 下载 |",
-            "| --- | --- | --- | --- | --- |"]
-    for name in ORDER:
-        cfg = json.loads((BOOKS / name / "book.json").read_text(encoding="utf-8"))
-        info = book_pages(name)
-        pages = str(info[0]) if info else "构建中"
-        rows.append(
-            f"| {LABEL[name]} | {cfg.get('subtitle', '')} | {pages} | "
-            f"[在线阅读](books/{name}/README.md) | "
-            f'<a class="pdf-link" href="output/{cfg["pdf"]}" target="_blank" '
-            f'rel="noopener">PDF</a> |')
-    body = [
-        "# 黑客技术与安全原理",
-        "",
-        "一套讲攻防原理的中文技术书，共三册。每一册都能单独读，合起来是一条从概念到动手的路径。",
-        "",
-        f"在线阅读：<{SITE}>　·　仓库：<https://github.com/ai-crystal/Hacker-Techniques>",
-        "",
-        *rows,
-        "",
-        "## 三册的分工",
-        "",
-        "入门篇讲全貌。从 1971 年第一只会自我复制的程序讲到今天的勒索产业，"
-        "再把机器、内存、网络、漏洞、恶意软件、人的因素逐层铺开。读完知道这个领域长什么样，"
-        "遇到新闻能判断危险发生在哪一层。",
-        "",
-        "理论篇讲为什么。指令怎么编码，堆分配器怎么记账，一个越界写怎样变成任意读写，"
-        "TLS 1.3 的握手为什么这样设计，检测为什么在数学上就有天花板。读完能自己判断一篇漏洞分析写得对不对。",
-        "",
-        "实战篇讲怎么做。在自己的虚拟机里搭靶场，从侦察、验证、利用、提权、横向一路做到样本分析和应急响应。"
-        "每一步都要求能解释清楚为什么这样做。",
-        "",
-        "## 怎么读",
-        "",
-        "刚入门从第一册读起；已经能写代码、想弄清楚机制的直接读第二册；"
-        "需要动手的从第三册开始，遇到不懂的概念再回去查。",
-        "",
-        "三册的实验环境、术语与例子保持统一，跨册阅读不需要重新适应。",
-    ]
-    return NL.join(body) + NL
-
-
-def series_sidebar() -> str:
-    lines = ["- [首页](README.md)", ""]
-    for name in ORDER:
-        cfg = json.loads((BOOKS / name / "book.json").read_text(encoding="utf-8"))
-        info = book_pages(name)
-        pages = f"　{info[0]} 页" if info else ""
-        lines.append(f"- **{LABEL[name]}　{cfg.get('subtitle', '')}{pages}**")
-        lines.append(f"- [本册首页](books/{name}/README.md)")
-        lines.append("")
-    return NL.join(lines) + NL
+def write(path: Path, text: str) -> None:
+    """统一用 LF 写盘，避免 Windows 下产生 CRLF 差异。"""
+    with open(path, "w", encoding="utf-8", newline=chr(10)) as fh:
+        fh.write(text)
 
 
 def main() -> None:
-    for book_dir in sorted(BOOKS.iterdir()):
-        if not (book_dir / "structure.json").exists():
-            continue
-        (book_dir / "_sidebar.md").write_text(sidebar(book_dir), encoding="utf-8")
-        (book_dir / "README.md").write_text(readme(book_dir), encoding="utf-8")
-        print(f"  {book_dir.name}: sidebar + README")
-    (ROOT / "README.md").write_text(series_readme(), encoding="utf-8")
-    (ROOT / "_sidebar.md").write_text(series_sidebar(), encoding="utf-8")
-    print("  根目录：README.md / _sidebar.md")
+    vols = volume_order()
+    write(ROOT / "_sidebar.md", root_sidebar(vols))
+    for cfg in vols:
+        d = BOOKS / cfg["_dir"]
+        write(d / "_sidebar.md", book_sidebar(cfg))
+        patch_book_readme(cfg)
+        print(f"  {cfg['_dir']}: sidebar + README 计数")
+    patch_root_readme(vols)
+    print("  根目录：_sidebar.md + README 计数")
 
 
 if __name__ == "__main__":

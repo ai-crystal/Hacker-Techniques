@@ -8,7 +8,7 @@
 
 共 16 章 · 147 页
 
-[从第 1 章开始](chapters/ch01.md)　·　<a href="../../output/theory.pdf" target="_blank" rel="noopener" data-router-ignore>下载本册 PDF</a>
+[从第 1 章开始](chapters/ch01.md)　·　<a href="../../output/v2-theory.pdf" target="_blank" rel="noopener" data-router-ignore>下载本册 PDF</a>
 
 ## 目录
 

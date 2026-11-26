@@ -14,9 +14,9 @@
 
 | 册 | 书名 | 一句话 | 页数 | 在线阅读 | PDF |
 | --- | --- | --- | ---: | --- | --- |
-| 01 | [入门篇](books/beginner/README.md) | 从病毒史到攻防全景 | 199 | [阅读](books/beginner/README.md) | <a href="output/beginner.pdf" target="_blank" rel="noopener" data-router-ignore>下载</a> |
-| 02 | [理论篇](books/theory/README.md) | 漏洞、内存与协议的深层结构 | 147 | [阅读](books/theory/README.md) | <a href="output/theory.pdf" target="_blank" rel="noopener" data-router-ignore>下载</a> |
-| 03 | [实战篇](books/practice/README.md) | 从靶场到真实对抗 | 192 | [阅读](books/practice/README.md) | <a href="output/practice.pdf" target="_blank" rel="noopener" data-router-ignore>下载</a> |
+| 01 | [入门篇](books/beginner/README.md) | 从病毒史到攻防全景 | 199 | [阅读](books/beginner/README.md) | <a href="output/v1-beginner.pdf" target="_blank" rel="noopener" data-router-ignore>下载</a> |
+| 02 | [理论篇](books/theory/README.md) | 漏洞、内存与协议的深层结构 | 147 | [阅读](books/theory/README.md) | <a href="output/v2-theory.pdf" target="_blank" rel="noopener" data-router-ignore>下载</a> |
+| 03 | [实战篇](books/practice/README.md) | 从靶场到真实对抗 | 192 | [阅读](books/practice/README.md) | <a href="output/v3-practice.pdf" target="_blank" rel="noopener" data-router-ignore>下载</a> |
 
 ## 怎么读
 

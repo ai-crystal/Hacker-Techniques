@@ -32,4 +32,4 @@
   - [附录 A　术语表](/books/beginner/appendix/a1-glossary.md)
   - [附录 B　延伸阅读](/books/beginner/appendix/a2-reading.md)
 
-- <a href="/output/beginner.pdf" target="_blank" rel="noopener" data-router-ignore>下载 PDF</a>
+- <a href="/output/v1-beginner.pdf" target="_blank" rel="noopener" data-router-ignore>下载 PDF</a>

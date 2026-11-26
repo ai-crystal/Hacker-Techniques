@@ -24,4 +24,4 @@
   - [附录 A　符号与术语](/books/theory/appendix/a1-notation.md)
   - [附录 B　延伸阅读](/books/theory/appendix/a2-reading.md)
 
-- <a href="/output/theory.pdf" target="_blank" rel="noopener" data-router-ignore>下载 PDF</a>
+- <a href="/output/v2-theory.pdf" target="_blank" rel="noopener" data-router-ignore>下载 PDF</a>

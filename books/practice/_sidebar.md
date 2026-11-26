@@ -26,4 +26,4 @@
   - [附录 A　命令与工具速查](/books/practice/appendix/a1-toolbox.md)
   - [附录 B　靶场与授权](/books/practice/appendix/a2-labs.md)
 
-- <a href="/output/practice.pdf" target="_blank" rel="noopener" data-router-ignore>下载 PDF</a>
+- <a href="/output/v3-practice.pdf" target="_blank" rel="noopener" data-router-ignore>下载 PDF</a>
