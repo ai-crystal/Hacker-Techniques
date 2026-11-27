@@ -27,6 +27,12 @@
 - [第 22 章　物联网与移动端](/books/beginner/chapters/ch22.md)
 - [第 23 章　供应链与国家行为体](/books/beginner/chapters/ch23.md)
 - [第 24 章　AI 时代的攻防](/books/beginner/chapters/ch24.md)
+- [第 25 章　数据与隐私：上网时被记录了什么](/books/beginner/chapters/ch25.md)
+- [第 26 章　手机与账号：被盗之后](/books/beginner/chapters/ch26.md)
+- [第 27 章　加密通信与匿名：挡住了谁](/books/beginner/chapters/ch27.md)
+- [第 28 章　企业网络长什么样](/books/beginner/chapters/ch28.md)
+- [第 29 章　漏洞公告怎么读](/books/beginner/chapters/ch29.md)
+- [第 30 章　安全研究怎么开始](/books/beginner/chapters/ch30.md)
 
 - **附录**
   - [附录 A　术语表](/books/beginner/appendix/a1-glossary.md)

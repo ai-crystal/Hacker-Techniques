@@ -147,3 +147,24 @@ if __name__ == "__main__":
     same_origin()
     sql_injection()
     xss_flow()
+
+
+def clickjacking():
+    fig, ax = setup(5.3, 2.9)
+    box(ax, 12.0, 36.0, 76.0, 14.0, fc=PALE, ec=LINE)
+    label(ax, 50.0, 45.6, "页面画的诱饵", fs=6.4, color=GREY)
+    label(ax, 50.0, 40.4, "“领取优惠券”", fs=8.6, color=INK)
+
+    box(ax, 12.0, 12.0, 76.0, 14.0, fc=PALE_WARN, ec=WARN, lw=1.1)
+    ax.patches[-1].set_linestyle((0, (4, 2)))
+    label(ax, 50.0, 21.6, "真实目标是 iframe，opacity 为 0", fs=6.4, color=GREY)
+    label(ax, 50.0, 16.4, "“确认转账 1000 元”", fs=8.6, color=WARN)
+
+    arrow(ax, (50.0, 35.4), (50.0, 26.8), color=ACCENT, lw=1.2)
+    label(ax, 55.0, 31.0, "点击落在这里", fs=6.6, color=ACCENT, ha="left")
+    label(ax, 50.0, 5.0, "视觉上是一颗按钮，坐标上却是另一颗", fs=7.0, color=SOFT)
+    return save(fig, "11", "clickjacking.png")
+
+
+if __name__ == "__main__":
+    clickjacking()

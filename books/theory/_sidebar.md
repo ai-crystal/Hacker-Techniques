@@ -19,6 +19,12 @@
 - [第 14 章　模糊测试：覆盖率与变异](/books/theory/chapters/ch14.md)
 - [第 15 章　侧信道与微架构](/books/theory/chapters/ch15.md)
 - [第 16 章　检测的极限](/books/theory/chapters/ch16.md)
+- [第 17 章　编译器与未定义行为](/books/theory/chapters/ch17.md)
+- [第 18 章　并发与内存模型](/books/theory/chapters/ch18.md)
+- [第 19 章　虚拟化与容器隔离](/books/theory/chapters/ch19.md)
+- [第 20 章　网络数据面](/books/theory/chapters/ch20.md)
+- [第 21 章　硬件信任根](/books/theory/chapters/ch21.md)
+- [第 22 章　构建与供应链](/books/theory/chapters/ch22.md)
 
 - **附录**
   - [附录 A　符号与术语](/books/theory/appendix/a1-notation.md)

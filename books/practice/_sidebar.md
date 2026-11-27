@@ -21,6 +21,12 @@
 - [第 16 章　恶意样本分析实战](/books/practice/chapters/ch16.md)
 - [第 17 章　检测工程与日志狩猎](/books/practice/chapters/ch17.md)
 - [第 18 章　应急响应与红蓝演练](/books/practice/chapters/ch18.md)
+- [第 19 章　无线与二层实战](/books/practice/chapters/ch19.md)
+- [第 20 章　云上实战](/books/practice/chapters/ch20.md)
+- [第 21 章　容器与 Kubernetes 实战](/books/practice/chapters/ch21.md)
+- [第 22 章　漏洞挖掘上手](/books/practice/chapters/ch22.md)
+- [第 23 章　钓鱼演练的设计与执行](/books/practice/chapters/ch23.md)
+- [第 24 章　报告、沟通与修复](/books/practice/chapters/ch24.md)
 
 - **附录**
   - [附录 A　命令与工具速查](/books/practice/appendix/a1-toolbox.md)

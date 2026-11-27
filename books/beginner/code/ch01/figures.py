@@ -121,8 +121,36 @@ def user_kernel():
     return save(fig, "01", "user-kernel.png")
 
 
+def toolchain():
+    fig, ax = setup(5.3, 3.15)
+    rows = [
+        ("hello.c", "六行源码", PALE_2),
+        ("hello.i", "预处理展开，八百多行", PALE),
+        ("hello.s", "汇编，十五行", PALE),
+        ("hello.o", "目标文件，带重定位表", PALE_BLUE),
+        ("a.out", "可执行文件，带启动代码", PALE_WARN),
+    ]
+    tools = ["cpp 展开宏与头文件", "cc1 生成汇编", "as 生成机器码", "ld 补地址并链接"]
+    h, gap = 8.6, 3.4
+    ys = []
+    y = 57.6 - h
+    for name, note, fc in rows:
+        ys.append(y)
+        box(ax, 6.0, y, 52.0, h, fc=fc, ec=LINE)
+        label(ax, 9.0, y + h - 3.0, name, fs=8.8, color=INK, ha="left", weight="bold")
+        label(ax, 9.0, y + 2.5, note, fs=7.0, color=GREY, ha="left")
+        y -= h + gap
+    for i, text in enumerate(tools):
+        top = ys[i]
+        bottom = ys[i + 1] + h
+        arrow(ax, (29.0, top - 0.5), (29.0, bottom + 0.5))
+        label(ax, 61.0, (top + bottom) / 2, text, fs=7.2, color=ACCENT, ha="left")
+    return save(fig, "01", "toolchain.png")
+
+
 if __name__ == "__main__":
     instruction_cycle()
     abstraction_layers()
     process_space()
     user_kernel()
+    toolchain()

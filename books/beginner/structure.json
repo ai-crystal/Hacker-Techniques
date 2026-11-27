@@ -140,6 +140,38 @@
   "kind": "chapter"
  },
  {
+  "path": "front/part8.md",
+  "kind": "part"
+ },
+ {
+  "path": "chapters/ch25.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch26.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch27.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "front/part9.md",
+  "kind": "part"
+ },
+ {
+  "path": "chapters/ch28.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch29.md",
+  "kind": "chapter"
+ },
+ {
+  "path": "chapters/ch30.md",
+  "kind": "chapter"
+ },
+ {
   "path": "front/postscript.md",
   "kind": "front"
  },

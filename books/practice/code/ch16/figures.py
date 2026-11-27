@@ -93,6 +93,37 @@ def behavior_points():
     return save(fig, "16", "behavior-points.png")
 
 
+def rva_map():
+    """同一个节在内存与文件里的两组坐标。"""
+    fig, ax = setup(5.3, 2.7)
+
+    label(ax, 12.0, 43.0, "内存\nRVA", fs=7.2, color=SOFT, ha="right")
+    label(ax, 12.0, 15.0, "文件\n偏移", fs=7.2, color=SOFT, ha="right")
+
+    rect(ax, 14.0, 38.0, 82.0, 9.0, fc=PALE, ec=LINE, lw=0.9)
+    rect(ax, 52.0, 38.0, 34.0, 9.0, fc=PALE_WARN, ec=LINE, lw=0.9)
+    label(ax, 69.0, 42.5, ".text 节在内存", fs=7.2, color=WARN)
+
+    rect(ax, 14.0, 10.0, 82.0, 9.0, fc=PALE, ec=LINE, lw=0.9)
+    rect(ax, 38.0, 10.0, 34.0, 9.0, fc=PALE_WARN, ec=LINE, lw=0.9)
+    label(ax, 55.0, 14.5, ".text 节在文件里", fs=7.2, color=WARN)
+
+    label(ax, 14.0, 48.8, "0", fs=6.2, color=GREY, ha="center")
+    label(ax, 14.0, 20.8, "0", fs=6.2, color=GREY, ha="center")
+
+    arrow(ax, (62.0, 38.0), (48.0, 19.0), lw=1.0, ms=7)
+    label(ax, 65.0, 27.0, "减 VirtualAddress\n加 PointerToRawData",
+          fs=6.4, color=ACCENT, ha="left")
+
+    label(ax, 14.0, 34.6, "VirtualAddress + Misc_VirtualSize",
+          fs=5.4, color=SOFT, ha="left", family="monospace")
+    label(ax, 96.0, 6.4, "PointerToRawData + SizeOfRawData",
+          fs=5.4, color=SOFT, ha="right", family="monospace")
+
+    return save(fig, "16", "rva-map.png")
+
+
 if __name__ == "__main__":
     analysis_flow()
     behavior_points()
+    rva_map()

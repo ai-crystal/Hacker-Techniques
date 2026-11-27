@@ -6,7 +6,7 @@
 
 它不教你点哪个按钮。它解释那些按钮背后成立与不成立的条件，以及在什么情况下这些条件会失效。读完能自己判断一篇漏洞分析写得对不对。
 
-共 16 章 · 147 页
+共 22 章 · 236 页
 
 [从第 1 章开始](chapters/ch01.md)　·　<a href="../../output/v2-theory.pdf" target="_blank" rel="noopener" data-router-ignore>下载本册 PDF</a>
 

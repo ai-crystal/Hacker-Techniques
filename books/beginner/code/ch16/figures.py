@@ -67,3 +67,31 @@ def phishing_layers():
 if __name__ == "__main__":
     trust_transfer()
     phishing_layers()
+
+
+def mail_auth():
+    fig, ax = setup(5.3, 3.1)
+    label(ax, 9.0, 52.0, "记录", fs=6.6, color=GREY)
+    label(ax, 30.0, 52.0, "验证的对象", fs=6.6, color=GREY)
+    label(ax, 79.0, 52.0, "DNS 里的内容", fs=6.6, color=GREY)
+
+    rows = [
+        ("SPF", 40.0, "信封发件人的域", "声称的 IP 段", "v=spf1 include:... -all"),
+        ("DKIM", 27.0, "正文字节与头部", "选择器下的公钥", "s1._domainkey  p=MIIBIj..."),
+        ("DMARC", 14.0, "From 头是否对齐", "策略与报告地址", "_dmarc  p=reject"),
+    ]
+    for name, y, t1, t2, dns in rows:
+        box(ax, 3.0, y, 12.5, 9.0, fc=PALE, ec=LINE)
+        label(ax, 9.25, y + 4.5, name, fs=7.4, color=ACCENT)
+        label(ax, 18.0, y + 5.6, t1, fs=6.6, color=INK, ha="left")
+        label(ax, 18.0, y + 3.0, t2, fs=6.4, color=GREY, ha="left")
+        box(ax, 55.0, y, 42.0, 9.0, fc=PALE_BLUE, ec="#c3d0dc")
+        label(ax, 76.0, y + 4.5, dns, fs=6.2, color=BLUE)
+
+    label(ax, 50.0, 6.0, "DMARC 只在前两条有一个通过、且与 From 头的域对齐时才放行", fs=6.8,
+          color=SOFT)
+    return save(fig, "16", "mail-auth.png")
+
+
+if __name__ == "__main__":
+    mail_auth()

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""第九章插图：UAF 的时序、tcache 链表被篡改前后。"""
+"""第九章插图：UAF 的时序、tcache 链表被篡改前后、块大小与分配路径。"""
 
 import sys
 from pathlib import Path
@@ -109,6 +109,44 @@ def tcache_poison():
     return save(fig, "09", "tcache-poison.png")
 
 
+def size_classes():
+    fig, ax = setup(5.3, 2.8)
+
+    y, h = 16.0, 13.0
+    segs = [
+        (8.0, 27.0, "fastbin", "块 ≤ 0x80", PALE_2, SOFT),
+        (27.0, 49.0, "smallbin", "块 < 0x400", PALE, SOFT),
+        (49.0, 70.0, "largebin", "块 ≥ 0x400", PALE_BLUE, BLUE),
+        (70.0, 92.0, "mmap", "请求 ≥ 0x20000", PALE_WARN, WARN),
+    ]
+    for x0, x1, name, sub, fc, color in segs:
+        ec = "#d8b6a6" if fc == PALE_WARN else LINE
+        box(ax, x0, y, x1 - x0, h, fc=fc, ec=ec, lw=0.9, radius=0)
+        label(ax, (x0 + x1) / 2, y + h / 2 + 2.2, name, fs=7.2,
+              color=color, weight="bold")
+        label(ax, (x0 + x1) / 2, y + h / 2 - 2.4, sub, fs=6.6, color=SOFT)
+
+    ticks = [(8.0, "0x20"), (27.0, "0x80"), (49.0, "0x400"), (70.0, "0x20000")]
+    for x, text in ticks:
+        ax.plot([x, x], [y - 0.4, y - 3.0], color=GREY, lw=0.7, zorder=3)
+        label(ax, x, y - 5.0, text, fs=6.4, color=GREY)
+
+    # tcache 命中区间：覆盖 fastbin、smallbin，并在 0x410 处结束
+    ax.plot([8.0, 52.0], [34.0, 34.0], color=ACCENT, lw=1.0, zorder=3)
+    for x in (8.0, 52.0):
+        ax.plot([x, x], [34.0, 31.2], color=ACCENT, lw=1.0, zorder=3)
+    label(ax, 30.0, 40.0,
+          "tcache 优先命中：块 ≤ 0x410 且该尺寸未满 7 块",
+          fs=6.9, color=ACCENT, weight="bold")
+    label(ax, 53.6, 34.0, "0x410", fs=6.4, color=ACCENT, ha="left")
+
+    label(ax, 50, 4.0,
+          "块大小 = (请求 + 8 + 15) & ~15，最小 0x20",
+          fs=6.4, color=GREY)
+    return save(fig, "09", "size-classes.png")
+
+
 if __name__ == "__main__":
     uaf_timeline()
     tcache_poison()
+    size_classes()

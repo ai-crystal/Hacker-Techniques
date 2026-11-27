@@ -6,7 +6,7 @@
 
 后半册转向防守，讲样本分析、检测规则、日志狩猎和应急响应。攻击与防守用同一套实验环境，做完红队再做蓝队，才知道哪些告警真的有用。
 
-共 18 章 · 192 页
+共 24 章 · 239 页
 
 [从第 1 章开始](chapters/ch01.md)　·　<a href="../../output/v3-practice.pdf" target="_blank" rel="noopener" data-router-ignore>下载本册 PDF</a>
 

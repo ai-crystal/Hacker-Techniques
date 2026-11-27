@@ -66,6 +66,34 @@ def klog_lines():
     return save(fig, "10", "klog-lines.png")
 
 
+def patch_chain():
+    """三重筛子：版本区间、补丁回移、配置放行。"""
+    fig, ax = setup(5.3, 2.9)
+
+    cols = [
+        ("版本落在区间", "uname -r / uname -v", "主版本加构建号"),
+        ("发行版未回移", "zgrep CVE in changelog", "命中即不可用"),
+        ("配置放行", "CONFIG / sysctl", "关掉就无入口"),
+    ]
+
+    w, gap, x0 = 29.0, 4.0, 2.5
+    h, top = 9.0, 46.0
+    for i, (title, cmd, verdict) in enumerate(cols):
+        x = x0 + i * (w + gap)
+        cx = x + w / 2
+        box(ax, x, top, w, h, fc=PALE, ec=LINE)
+        label(ax, cx, top + h / 2, title, fs=7.8, color=INK, weight="bold")
+        label(ax, cx, top - 7.5, cmd, fs=5.8, color=ACCENT, family="monospace")
+        label(ax, cx, top - 13.0, verdict, fs=6.2, color=SOFT)
+        arrow(ax, (cx, top - 16.0), (cx, 18.6), lw=0.9, ms=6)
+
+    box(ax, 2.5, 7.0, 95.0, 11.0, fc=PALE_2, ec=LINE)
+    label(ax, 50.0, 12.5, "三条都成立才值得写利用，缺一条就换思路", fs=7.6, color=INK)
+
+    return save(fig, "10", "patch-chain.png")
+
+
 if __name__ == "__main__":
     priv_flow()
     klog_lines()
+    patch_chain()

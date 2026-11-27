@@ -85,7 +85,46 @@ def remote_path():
     return save(fig, "06", "remote-path.png")
 
 
+def frame_compare():
+    fig, ax = setup(5.3, 2.9)
+    h, gap = 8.5, 1.8
+    ys = [10.0 + i * (h + gap) for i in range(4)]
+
+    left = [("buf[16]", PALE), ("保存的 rbp", PALE_2),
+            ("返回地址", PALE_WARN), ("调用者的栈帧", "#f2f2ef")]
+    right = [("保存的 x29", PALE_2), ("保存的 x30（LR）", PALE_WARN),
+             ("buf[16]", PALE), ("调用者的栈帧", "#f2f2ef")]
+
+    for x0, center, title, cells in ((2.0, 19.0, "x86-64", left),
+                                     (54.0, 71.0, "AArch64", right)):
+        label(ax, center, 52.0, title, fs=9.2, color=ACCENT, weight="bold")
+        for y, (text, fc) in zip(ys, cells):
+            box(ax, x0, y, 34.0, h, fc=fc, ec=LINE)
+            label(ax, center, y + h / 2, text, fs=7.4, color=SOFT)
+
+    # 左侧：从 buf 顶部一路写到返回地址
+    y_buf_top = ys[0] + h
+    y_ret_bottom = ys[2]
+    ax.plot([36.0, 39.0], [y_buf_top, y_buf_top], color=WARN, lw=0.9)
+    arrow(ax, (39.0, y_buf_top), (39.0, y_ret_bottom - 0.6), color=WARN, lw=1.1)
+    label(ax, 42.4, (y_buf_top + y_ret_bottom) / 2, "越界写入", fs=6.8,
+          color=WARN, rotation=90)
+
+    # 右侧：溢出不经过保存的 x30，直接进入调用者的栈帧
+    y_buf_top_r = ys[2] + h
+    ax.plot([88.0, 91.0], [y_buf_top_r, y_buf_top_r], color=ACCENT_2, lw=0.9)
+    arrow(ax, (91.0, y_buf_top_r), (91.0, ys[3] + h * 0.75), color=ACCENT_2, lw=1.1)
+    label(ax, 94.4, (y_buf_top_r + ys[3] + h * 0.75) / 2, "越过整个帧",
+          fs=6.8, color=ACCENT_2, rotation=90)
+
+    label(ax, 19.0, 5.6, "向上写先到 rbp，再到返回地址", fs=6.6, color=GREY)
+    label(ax, 71.0, 5.6, "x30 在缓冲区下方，向上写碰不到", fs=6.6, color=GREY)
+
+    return save(fig, "06", "frame-compare.png")
+
+
 if __name__ == "__main__":
     stack_overwrite()
     control_flow_hijack()
     remote_path()
+    frame_compare()

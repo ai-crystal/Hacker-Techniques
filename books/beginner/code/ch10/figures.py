@@ -128,3 +128,41 @@ if __name__ == "__main__":
     arp_spoof()
     tls_handshake()
     heartbleed()
+
+
+def keystream_reuse():
+    fig, ax = setup(5.3, 3.0)
+    box(ax, 2.0, 40.0, 26.0, 8.0, fc=PALE, ec=LINE)
+    label(ax, 15.0, 44.0, "明文 P1", fs=7.6, color=INK)
+    box(ax, 2.0, 26.0, 26.0, 8.0, fc=PALE, ec=LINE)
+    label(ax, 15.0, 30.0, "明文 P2", fs=7.6, color=INK)
+
+    box(ax, 30.0, 34.2, 16.0, 5.6, fc=PALE_WARN, ec="#e2ccc0")
+    label(ax, 38.0, 37.0, "同一串密钥流", fs=6.8, color=WARN)
+
+    label(ax, 58.0, 44.0, "⊕", fs=12, color=ACCENT)
+    label(ax, 58.0, 30.0, "⊕", fs=12, color=ACCENT)
+
+    arrow(ax, (28.4, 44.0), (55.4, 44.0))
+    arrow(ax, (28.4, 30.0), (55.4, 30.0))
+    arrow(ax, (46.4, 38.0), (55.8, 42.4), lw=1.0)
+    arrow(ax, (46.4, 36.0), (55.8, 31.6), lw=1.0)
+
+    box(ax, 63.0, 40.0, 33.0, 8.0, fc=PALE_BLUE, ec="#c3d0dc")
+    label(ax, 79.5, 44.0, "密文 C1", fs=7.6, color=BLUE)
+    box(ax, 63.0, 26.0, 33.0, 8.0, fc=PALE_BLUE, ec="#c3d0dc")
+    label(ax, 79.5, 30.0, "密文 C2", fs=7.6, color=BLUE)
+    arrow(ax, (60.0, 44.0), (62.6, 44.0))
+    arrow(ax, (60.0, 30.0), (62.6, 30.0))
+
+    arrow(ax, (66.0, 25.6), (66.0, 15.4), color=GREY, lw=0.9, ls=(0, (3, 2)))
+
+    rect(ax, 2.0, 3.4, 94.0, 12.0, fc=PALE_2)
+    label(ax, 49.0, 11.4, "C1 ⊕ C2 = P1 ⊕ P2", fs=8.4, color=ACCENT)
+    label(ax, 49.0, 6.6, "密钥流在异或里抵消，剩下两段明文的异或", fs=6.8,
+          color=SOFT)
+    return save(fig, "10", "keystream-reuse.png")
+
+
+if __name__ == "__main__":
+    keystream_reuse()
